@@ -70,7 +70,7 @@ pipeline {
                     
                     // Running automation using cucumber tag
                     sh '''#!/bin/bash -l 
-                      bundle exec cucumber -p api --tag ${CUCUMBER_TAG}
+                      bundle exec cucumber --retry 1 -p api -f pretty -f html -o cucumber-api.html -f json -o cucumber-api.json --tag ${CUCUMBER_TAG}
                     '''
 
                 }
