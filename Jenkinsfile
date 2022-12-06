@@ -30,7 +30,7 @@ pipeline {
                       submoduleCfg: [], 
                       userRemoteConfigs: [[
                         credentialsId: 'git-repo-api',
-                        url: 'repository',
+                        url: 'git@github.com:arisfatahillah/api-web-automation.git',
                         refspec: '+refs/heads/'+params.BRANCH_NAME+':refs/remotes/origin/'+params.BRANCH_NAME
                       ]]
                     ])
