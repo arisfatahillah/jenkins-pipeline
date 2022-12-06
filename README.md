@@ -1,7 +1,7 @@
 # jenkins-pipeline
 running automation using jenkins pipeline
 
-# Read the documentation using wiki
+# Read the documentation in wiki
 https://github.com/arisfatahillah/jenkins-pipeline/wiki/Config-Jenkins
 
 # Running Pipeline jenkins 
