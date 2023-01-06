@@ -1,5 +1,6 @@
 def BRANCH_NAME
 def CUCUMBER_TAG
+def EXECUTOR
 
 pipeline {
     environment {
@@ -11,6 +12,7 @@ pipeline {
     parameters {
         string name: 'BRANCH_NAME', defaultValue: 'main', description: 'describe your branch to run the test (default is main branch)'
         string name: 'CUCUMBER_TAG', defaultValue: '', description: 'describe your cucumber tag to run the automation test'
+        choice name: 'EXECUTOR', choices: ['linux', 'windows'], description: 'running on linux machine or windows machine'
     }
 
     options {
@@ -45,17 +47,9 @@ pipeline {
 
                     CUCUMBER_TAG = params.CUCUMBER_TAG
                     BRANCH_NAME = params.BRANCH_NAME
+                    EXECUTOR = params.EXECUTOR
 
-                    // go to directory
-                    bat '''
-                       whoami
-                       echo $PATH
-                       cd ${WORKSPACE}
-                       npm i
-                    '''
-                 
-
-                     println '''
+                    println '''
                         ######################################################
                                               PARAMETERS
                         ######################################################
@@ -64,18 +58,30 @@ pipeline {
                         ######################################################
                         '''
                     
-                    // Running automation using cucumber tag
-                    bat 'npm run test '+CUCUMBER_TAG
+                    if(EXECUTOR.matches("linux")) {
+                      sh '''#!/bin/bash -l
+                        whoami
+                        echo $PATH
+                        cd ${WORKSPACE}
+                        npm i
+                        npm run test ${CUCUMBER_TAG}
+                      '''
+                    } 
+                    else if (EXECUTOR.matches("windows")) {
+                      bat '''
+                       whoami
+                       echo $PATH
+                       cd ${WORKSPACE}
+                       npm i
+                      '''
+                      // Running automation using cucumber tag
+                      bat 'npm run test '+CUCUMBER_TAG
+                    }
 
                 }
             }
         }
 
     }
-    post {
-        always {
-        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-    }
-  }
 
 }
