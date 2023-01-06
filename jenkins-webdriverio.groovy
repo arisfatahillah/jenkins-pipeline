@@ -65,9 +65,7 @@ pipeline {
                         '''
                     
                     // Running automation using cucumber tag
-                    bat '''
-                      npm run test @register
-                    '''
+                    bat 'npm run test '+CUCUMBER_TAG
 
                 }
             }
