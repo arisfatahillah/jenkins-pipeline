@@ -47,7 +47,7 @@ pipeline {
                     BRANCH_NAME = params.BRANCH_NAME
 
                     // go to directory
-                    sh '''#!/bin/bash -l
+                    sh '''
                        whoami
                        echo $PATH
                        cd ${WORKSPACE}
@@ -65,7 +65,7 @@ pipeline {
                         '''
                     
                     // Running automation using cucumber tag
-                    sh '''#!/bin/bash -l 
+                    sh '''
                       npm run test ${CUCUMBER_TAG}
                     '''
 
